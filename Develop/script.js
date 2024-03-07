@@ -6,19 +6,55 @@ const collectEmployees = function() {
   // TODO: Get user input to create and return an array of employee objects
   const employees = [];
   let addEmployee = true;
-  let firstName = prompt("First Name:");
-  let lastName = prompt("Last Name:");
-  let salary = parseFloat(prompt("Enter Salary:"));
+  // while loop to keep adding employees 
+  while (addEmployee) {
+    // grabbing employee details
+    let firstName = prompt("First Name:");
+    let lastName = prompt("Last Name:");
+    let salary = parseFloat(prompt("Enter Salary:"));
+
+    // Checking if salary is entered as a number
+    if (isNaN(salary)) {
+      salary = 0;
+    } else {
+      salary = parseFloat(salary);
+    }
+
+    // add employee data to array
+    employees.push({
+      firstName: firstName,
+      lastName: lastName,
+      salary: salary
+    })
+
+    // asking user if they would like to add another employee
+    if (!confirm("Would you like to add another employee?")) {
+      addEmployee = false;
+    }
+  }
+
+  return employees;
 }
 
 // Display the average salary
 const displayAverageSalary = function(employeesArray) {
   // TODO: Calculate and display the average salary
+  // reduce function takes two inputs: accumulator, currentValue and returns a single number in this case
+  const totalSalaries = employeesArray.reduce((sum, employee) => sum + employee.salary, 0)
+  const averageSalary = totalSalaries / employeesArray.length;
+  // const salariesArray = emplArray.map(employee => employee.salary);
+  console.log(`Average Salary: $${averageSalary.toFixed(2)}`);
 }
 
 // Select a random employee
 const getRandomEmployee = function(employeesArray) {
   // TODO: Select and display a random employee
+  // creating a random index
+  const randomIndex = Math.floor(Math.random() * employeesArray.length);
+  // picking the random employee
+  const randomEmployee = employeesArray[randomIndex];
+  // print the random employees first name and last name
+  console.log(`The Random Employee is: ${randomEmployee.firstName} ${randomEmployee.lastName}`);
 }
 
 /*
